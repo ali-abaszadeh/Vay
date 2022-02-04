@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  nginx-ssl:
+    image: nginx-custom-vay
+    container_name: nginx-custom-vay
+    volumes:
+     - ./conf.d/:/etc/nginx/conf.d
+     - ./certificates:/etc/nginx/certs
+    ports:
+     - "10080:80"       
+     - "10443:443"
+
