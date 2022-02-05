@@ -82,9 +82,11 @@ RUN apt remove -y \
     apt autoremove -y && \
     rm -rf /tmp/*
 
+COPY ./nginx.conf /etc/nginx 
+
 # PORTS
-EXPOSE 80
-EXPOSE 443
+EXPOSE 10080
+EXPOSE 10443
 
 USER nginx
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]

@@ -106,7 +106,11 @@ chmod +x pre-build.sh
 ./pre-build.sh
 
 # Build the nginx image and run it
-docker-compose up -d 
+docker-compose up -d
+
+echo "$YOUR_HOST_IP let.me.play" >> /etc/hosts
+
+chek let.me.play on your browser 
 
 #####################################
 

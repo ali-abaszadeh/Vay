@@ -39,7 +39,8 @@ mkdir $PROJECT_PATH/nginx-source-file
 wget $official_nginx_repo/nginx-$nginx_tag.tar.gz -O nginx-source-file/nginx.tar.gz
 
 # Export NGINX_TAG value for using in the docker-compose file
-#export NGINX_TAG=$nginx_tag
-#export DOCKER_IMAGE_TAG=$docker_image_tag
 echo "NGINX_TAG=$nginx_tag" > $PROJECT_PATH/.env
 echo "DOCKER_IMAGE_TAG=$docker_image_tag" >> $PROJECT_PATH/.env
+
+# Remove temporary directory
+rm -rf $PROJECT_PATH/nginx
