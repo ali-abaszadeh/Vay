@@ -70,4 +70,49 @@ git reset --hard 285a495d
 
 ##################################
 
+--with-file-aio
+enables the use of asynchronous file I/O (AIO) on FreeBSD and Linux.
+
+--with-http_ssl_module
+enables building a module that adds the HTTPS protocol support to an HTTP server. This module is not built by default. The OpenSSL library is required to build and run this module.
+
+--with-http_v2_module
+enables building a module that provides support for HTTP/2. This module is not built by default.
+
+--with-select_module
+--without-select_module
+enables or disables building a module that allows the server to work with the select() method. This module is built automatically if the platform does not appear to support more appropriate methods such as kqueue, epoll, or /dev/poll.
+
+--with-threads
+enables the use of thread pool
+
+Defines the name and parameters of a thread pool used for multi-threaded reading and sending of files without blocking worker processes.
+
+The threads parameter defines the number of threads in the pool.
+
+In the event that all threads in the pool are busy, a new task will wait in the queue. The max_queue parameter limits the number of tasks allowed to be waiting in the queue. By default, up to 65536 tasks can wait in the queue. When the queue overflows, the task is completed with an error.
+
+--without-poll_module
+enables or disables building a module that allows the server to work with the poll() method. This module is built automatically if the platform does not appear to support more appropriate methods such as kqueue, epoll, or /dev/poll.
+
+####################################
+
+# How can I run the project
+
+git clone ali-abaszadeh
+
+# Run pre build script
+chmod +x pre-build.sh
+./pre-build.sh
+
+# Build the nginx image and run it
+docker-compose up -d 
+
+#####################################
+
+# remove all build cache
+docker builder prune -a
+
+##################################### 
+
 

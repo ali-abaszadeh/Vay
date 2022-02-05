@@ -18,28 +18,30 @@ WORKDIR /tmp
 
 # Install prerequisites for Nginx compile
 RUN apt install -y \ 
-        wget \
         openssl \
+        libssl-dev \
         gcc \
         make \
+        build-essential \
         zlib1g-dev \
         libpcre3-dev \
+        perl \
+        libperl-dev \
+        libgd3 \
+        libgd-dev \
         git && \
     rm -rf /var/lib/apt/lists/* && \
     apt clean
 
 
-# Git clone official github nginx and Nginx modules source
-#RUN wget http://nginx.org/download/nginx-1.9.3.tar.gz -O nginx.tar.gz && \
-RUN git clone https://github.com/nginx/nginx.git /tmp
-    #tar -xzvf nginx.tar.gz -C /tmp/nginx --strip-components=1 &&\
+# Add Nginx source file to the build environment
+RUN mkdir /tmp/nginx
+COPY ./nginx-source-file/nginx.tar.gz /tmp
+RUN tar -xzvf /tmp/nginx.tar.gz -C /tmp/nginx --strip-components=1
 
 
 # Build Nginx
 WORKDIR /tmp/nginx
-
-# Change at commit 285a495d using command "git reset --hard <COMMIT-SHA-ID>"
-RUN git reset --hard 285a495d
 
 
 RUN ./configure \
@@ -53,36 +55,28 @@ RUN ./configure \
         --lock-path=/run/lock/subsys/nginx \
         --error-log-path=/var/log/nginx/error.log \
         --http-log-path=/var/log/nginx/access.log \
-        --with-http_gzip_static_module \
-        --with-http_stub_status_module \
         --with-http_ssl_module \
-        --with-http_spdy_module \
-        --with-pcre \
-        --with-http_image_filter_module \
+        --with-http_v2_module \
         --with-file-aio \
-        --with-ipv6 \
-        --with-http_dav_module \
-        --with-http_flv_module \
-        --with-http_mp4_module \
-        --with-http_gunzip_module && \
+        --with-http_v2_module \
+        --with-threads \
+        --with-select_module \
+        --without-poll_module && \
     make && \
     make install
 
-WORKDIR /tmp
+WORKDIR /tmp 
 
 # Add nginx user
-RUN adduser -c "Nginx user" nginx && \
-    setcap cap_net_bind_service=ep /usr/sbin/nginx
+RUN adduser --system --home /nonexistent --shell /bin/false --no-create-home --disabled-login --disabled-password --gecos "nginx user" --group nginx
 
 RUN touch /run/nginx.pid
 
-RUN chown nginx:nginx /etc/nginx /etc/nginx/nginx.conf /var/log/nginx /usr/share/nginx /run/nginx.pid
+RUN chown -R nginx:nginx /etc/nginx /etc/nginx/nginx.conf /var/log/nginx /usr/share/nginx /run/nginx.pid
 
 # Cleanup after Nginx build
 RUN apt remove -y \
-        wget \
         gcc \
-        gcc-c++ \
         make \
         git && \
     apt autoremove -y && \
