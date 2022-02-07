@@ -95,6 +95,80 @@ In the event that all threads in the pool are busy, a new task will wait in the 
 --without-poll_module
 enables or disables building a module that allows the server to work with the poll() method. This module is built automatically if the platform does not appear to support more appropriate methods such as kqueue, epoll, or /dev/poll.
 
+##########################################
+
+# Response Header Fields
+We will study General-header and Entity-header in a separate chapter when we will learn HTTP header fields. For now, let's check what Response header fields are.
+
+The response-header fields allow the server to pass additional information about the response which cannot be placed in the Status- Line. These header fields give information about the server and about further access to the resource identified by the Request-URI.
+
+Accept-Ranges
+
+Age
+
+ETag
+
+Location
+
+Proxy-Authenticate
+
+Retry-After
+
+Server
+
+Vary
+
+WWW-Authenticate
+#
+You can introduce your custom fields in case you are going to write your own custom Web Client and Server.
+
+S.N.	Code and Description
+1	1xx: Informational
+It means the request was received and the process is continuing.
+
+2	2xx: Success
+It means the action was successfully received, understood, and accepted.
+
+3	3xx: Redirection
+It means further action must be taken in order to complete the request.
+
+4	4xx: Client Error
+It means the request contains incorrect syntax or cannot be fulfilled.
+
+5	5xx: Server Error
+It means the server failed to fulfill an apparently valid request.
+
+###################################
+#
+System load
+To understand what these load averages tell us (and when to be alarmed), we'll first need to understand what system load means, and how it's counted.
+
+The load of a system is essentially the number of processes active at any given time. When idle, the load is 0. When a process starts, the load is incremented by 1. A terminating process decrements the load by 1. Besides running processes, any process that's queued up is also counted. So, when one process is actively using the CPU, and two are waiting their turn, the load is 3.
+
+The load fluctuates quickly because of short-lived processes and can jump from zero to 5 in milliseconds and back again the next instant. Because of this volatility, it's more useful to look at the average load over time, which gives a better overview of the load the system has been under.
+
+Load averages
+Now that we know how system load is counted, we can take a look at load averages. As we've seen, the load the system is under is usually shown as an average over time.
+
+Generally, single-core CPU can handle one process at a time. An average load of 1.0 would mean that one core is busy 100% of the time. If the load average drops to 0.5, the CPU has been idle for 50% of the time.
+
+If the load average rises to 1.5, the CPU was busy all the time while there was (on average) one other process waiting for 50% of the time, giving the CPU more work than it can handle.
+
+At short
+
+System load/CPU Load is a measurement of CPU over or under-utilization in a Linux system; the number of processes which are being executed by the CPU or in waiting state.
+Load average is the average system load calculated over a given period of time of 1, 5 and 15 minutes.
+
+$ uptime
+
+07:13:53 up 8 days, 19 min,  1 user,  load average: 1.98, 2.15, 2.21
+
+The numbers are read from left to right, and the output above means that:
+
+load average over the last 1 minute is 1.98
+load average over the last 5 minutes is 2.15
+load average over the last 15 minutes is 2.21
+
 ####################################
 
 # How can I run the project
@@ -108,9 +182,16 @@ chmod +x pre-build.sh
 # Build the nginx image and run it
 docker-compose up -d
 
+#ln -s /var/lib/docker/volumes/nginx_config/_data/nginx.conf ./nginx.conf
+
 echo "$YOUR_HOST_IP let.me.play" >> /etc/hosts
 
-chek let.me.play on your browser 
+# Check let.me.play on your browser 
+curl https://let.me.play:10443
+curl http://let.me.play:10080
+
+# Check LOAD_AVARAGE and SYSTEM_ENTROPY
+curl --head  https://let.me.play:10443
 
 #####################################
 

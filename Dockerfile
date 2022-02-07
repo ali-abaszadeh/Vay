@@ -29,6 +29,8 @@ RUN apt install -y \
         libperl-dev \
         libgd3 \
         libgd-dev \
+        gettext-base \
+        net-tools vim curl telnet \
         git && \
     rm -rf /var/lib/apt/lists/* && \
     apt clean
@@ -58,7 +60,6 @@ RUN ./configure \
         --with-http_ssl_module \
         --with-http_v2_module \
         --with-file-aio \
-        --with-http_v2_module \
         --with-threads \
         --with-select_module \
         --without-poll_module && \
@@ -72,7 +73,16 @@ RUN adduser --system --home /nonexistent --shell /bin/false --no-create-home --d
 
 RUN touch /run/nginx.pid
 
-RUN chown -R nginx:nginx /etc/nginx /etc/nginx/nginx.conf /var/log/nginx /usr/share/nginx /run/nginx.pid
+# Manage environment variable in the nginx container
+
+COPY ./nginx.conf /etc/nginx
+
+COPY ./nginx.conf.template /etc/nginx
+
+COPY ./docker-entrypoint.sh /
+
+RUN chmod 755 /docker-entrypoint.sh
+#
 
 # Cleanup after Nginx build
 RUN apt remove -y \
@@ -82,13 +92,22 @@ RUN apt remove -y \
     apt autoremove -y && \
     rm -rf /tmp/*
 
-COPY ./nginx.conf /etc/nginx 
+ADD ./conf.d  /etc/nginx/conf.d
+ADD ./certificates /etc/nginx/certs
+
+RUN chown -R nginx:nginx /etc/nginx /etc/nginx/nginx.conf /var/log/nginx /usr/share/nginx /run/nginx.pid
+
+#ENTRYPOINT ["/docker-entrypoint.sh"]
+# Running script every 5 second to get new variables for nginx
+
+WORKDIR /
+
+RUN nohup ./docker-entrypoint.sh &
 
 # PORTS
 EXPOSE 10080
 EXPOSE 10443
 
 USER nginx
+
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
-
-

@@ -4,14 +4,14 @@ services:
     build: .
     image: nginx_custom_vay:${NGINX_TAG}
     container_name: nginx-custom-vay
-    volumes:
-     - ./certificates:/etc/nginx/certs
-     - ./conf.d/:/etc/nginx/conf.d
-     - nginx_config:/etc/nginx
+    #volumes:
+    # - ./certificates:/etc/nginx/certs
+    # - ./conf.d/:/etc/nginx/conf.d
+       #- nginx_config:/etc/nginx
     ports:
      - "10080:10080"       
      - "10443:10443"
 
-volumes:
-  nginx_config:
-    external: true
+       #volumes:
+       #nginx_config:
+       #external: true

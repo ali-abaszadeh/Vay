@@ -3,19 +3,18 @@ server {
     server_name  let.me.play;
     ssl_certificate /etc/nginx/certs/let.me.play.crt;
     ssl_certificate_key /etc/nginx/certs/let.me.play.key;
-    
+
 #    root   /var/www/html/repo;
     root html;
-    
+
     location / {
         #proxy_pass http://127.0.0.1;
         #error_log /var/log/front_end_errors.log;
- 
-        add_header 'X-Vay-Entropy: 1' always;
-        add_header 'X-Vay-Load: 1' always;
 
+        add_header 'X-Vay-Entropy: ${SYSTEM_ENTROPY}' always;
+        add_header 'X-Vay-Load: ${LOAD_AVARAGE}' always;
 
         index  index.php index.html index.htm;
-        autoindex on;	#enable listing of directory index
+        autoindex on;   #enable listing of directory index
     }
 }
