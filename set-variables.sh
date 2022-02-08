@@ -21,12 +21,17 @@ do
 # Set new values for "system's entropy" and "load avarage" in the nginx.conf
 
   set -eu
+
   envsubst '${SYSTEM_ENTROPY} ${LOAD_AVARAGE}' < $nginx_template_path > $nginx_config_path
+
+  # exec "$@" is typically used to make the entrypoint a pass through that then runs the docker command. 
+  # It will replace the current running shell with the command that "$@" is pointing to
+  # Its important for process handeling in container.
   
   exec "$@"
 
   nginx -s reload
 
-  sleep 10
+  sleep 5
 
 done

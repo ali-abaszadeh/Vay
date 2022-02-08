@@ -80,7 +80,9 @@ COPY ./nginx.conf.template /etc/nginx
 
 COPY ./set-variables.sh /
 
-RUN chmod 755 /set-variables.sh && touch /etc/profile.d/vay-variables.sh && chmod 777 /etc/profile.d/vay-variables.sh
+RUN chown nginx:nginx /set-variables.sh && \ 
+    touch /etc/profile.d/vay-variables.sh && \
+    chmod 777 /etc/profile.d/vay-variables.sh
 #
 
 # Cleanup after Nginx build

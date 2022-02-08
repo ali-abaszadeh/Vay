@@ -1,25 +1,47 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Welcome to nginx!</title>
-<style>
-    body {
-        width: 35em;
-        margin: 0 auto;
-        font-family: Tahoma, Verdana, Arial, sans-serif;
-    }
-</style>
-</head>
-<body>
-<h1>Welcome to nginx!</h1>
-<p>If you see this page, the nginx web server is successfully installed and
-working. Further configuration is required.</p>
-
-<p>For online documentation and support please refer to
-<a href="http://nginx.org/">nginx.org</a>.<br/>
-Commercial support is available at
-<a href="http://nginx.com/">nginx.com</a>.</p>
-
-<p><em>Thank you for using nginx.</em></p>
-</body>
-</html>
+<div class="container">
+  <h1>HTML5 Editable Table</h1>
+  <p>Through the powers of <strong>contenteditable</strong> and some simple jQuery you can easily create a custom editable table. No need for a robust JavaScript library anymore these days.</p>
+  
+  <ul>
+    <li>An editable table that exports a hash array. Dynamically compiles rows from headers</li> 
+    <li>Simple / powerful features such as add row, remove row, move row up/down.</li>
+  </ul>
+  
+  <div id="table" class="table-editable">
+    <span class="table-add glyphicon glyphicon-plus"></span>
+    <table class="table">
+      <tr>
+        <th>Name</th>
+        <th>Value</th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr>
+        <td contenteditable="true">Stir Fry</td>
+        <td contenteditable="true">stir-fry</td>
+        <td>
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+        <td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+      <!-- This is our clonable table line -->
+      <tr class="hide">
+        <td contenteditable="true">Untitled</td>
+        <td contenteditable="true">undefined</td>
+        <td>
+          <span class="table-remove glyphicon glyphicon-remove"></span>
+        </td>
+        <td>
+          <span class="table-up glyphicon glyphicon-arrow-up"></span>
+          <span class="table-down glyphicon glyphicon-arrow-down"></span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  
+  <button id="export-btn" class="btn btn-primary">Export Data</button>
+  <p id="export"></p>
+</div>
