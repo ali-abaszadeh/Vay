@@ -1,4 +1,3 @@
-
 # Download base image ubuntu 20.04
 FROM ubuntu:20.04
 
@@ -6,7 +5,7 @@ FROM ubuntu:20.04
 LABEL maintainer="a.abaszadeh1363@gmail.com"
 LABEL version="0.1"
 LABEL description="This is custom Docker Image for \
-the Nginx Services."
+the Vay Nginx Services."
 
 # Disable Prompt During Packages Installation
 ARG DEBIAN_FRONTEND=noninteractive
@@ -30,7 +29,7 @@ RUN apt install -y \
         libgd3 \
         libgd-dev \
         gettext-base \
-        net-tools vim curl telnet \
+        net-tools vim telnet \
         git && \
     rm -rf /var/lib/apt/lists/* && \
     apt clean
@@ -75,13 +74,13 @@ RUN touch /run/nginx.pid
 
 # Manage environment variable in the nginx container
 
-COPY ./nginx.conf /etc/nginx
+COPY ./nginx.conf  /etc/nginx
 
 COPY ./nginx.conf.template /etc/nginx
 
-COPY ./docker-entrypoint.sh /
+COPY ./set-variables.sh /
 
-RUN chmod 755 /docker-entrypoint.sh
+RUN chmod 755 /set-variables.sh && touch /etc/profile.d/vay-variables.sh && chmod 777 /etc/profile.d/vay-variables.sh
 #
 
 # Cleanup after Nginx build
@@ -94,20 +93,17 @@ RUN apt remove -y \
 
 ADD ./conf.d  /etc/nginx/conf.d
 ADD ./certificates /etc/nginx/certs
+COPY ./data /usr/share/nginx/html
 
 RUN chown -R nginx:nginx /etc/nginx /etc/nginx/nginx.conf /var/log/nginx /usr/share/nginx /run/nginx.pid
-
-#ENTRYPOINT ["/docker-entrypoint.sh"]
-# Running script every 5 second to get new variables for nginx
-
-WORKDIR /
-
-RUN nohup ./docker-entrypoint.sh &
 
 # PORTS
 EXPOSE 10080
 EXPOSE 10443
 
 USER nginx
-
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
+
+# Run script for handeling dynamic variables
+USER root
+ENTRYPOINT ["/set-variables.sh"]

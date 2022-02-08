@@ -179,7 +179,14 @@ git clone ali-abaszadeh
 chmod +x pre-build.sh
 ./pre-build.sh
 
-# Build the nginx image and run it
+# Build the nginx image and run it using build.sh automatically
+
+chmod +x build.sh
+./build.sh
+
+# OR Build the nginx image and run it using below commands manually
+docker-compose build
+
 docker-compose up -d
 
 #ln -s /var/lib/docker/volumes/nginx_config/_data/nginx.conf ./nginx.conf
