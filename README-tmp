@@ -189,16 +189,17 @@ docker-compose build
 
 docker-compose up -d
 
-#ln -s /var/lib/docker/volumes/nginx_config/_data/nginx.conf ./nginx.conf
-
-echo "$YOUR_HOST_IP let.me.play" >> /etc/hosts
-
 # Check let.me.play on your browser 
+echo "$YOUR_HOST_IP let.me.play" >> /etc/hosts
 curl https://let.me.play:10443
 curl http://let.me.play:10080
 
 # Check LOAD_AVARAGE and SYSTEM_ENTROPY
 curl --head  https://let.me.play:10443
+
+# Restart Nginx
+chmod +x nginx.sh
+nginx-reset.sh 
 
 #####################################
 

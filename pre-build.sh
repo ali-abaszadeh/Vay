@@ -42,5 +42,8 @@ wget $official_nginx_repo/nginx-$nginx_tag.tar.gz -O nginx-source-file/nginx.tar
 echo "NGINX_TAG=$nginx_tag" > $PROJECT_PATH/.env
 echo "DOCKER_IMAGE_TAG=$docker_image_tag" >> $PROJECT_PATH/.env
 
+# Link Dockerfile between curent path and data directory
+ln -s ./Dockerfile data/Dockerfile
+
 # Remove temporary directory
 rm -rf $PROJECT_PATH/nginx
