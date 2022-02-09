@@ -169,7 +169,7 @@ load average over the last 1 minute is 1.98
 load average over the last 5 minutes is 2.15
 load average over the last 15 minutes is 2.21
 
-####################################
+###############################################################
 
 # How can I run the project
 
@@ -188,6 +188,12 @@ chmod +x build.sh
 docker-compose build
 
 docker-compose up -d
+
+# Run set-variables.sh script on the container
+sleep 6
+docker-compose exec -d -u 0 $nginx_service_name /set-variables.sh
+
+#################################################################
 
 # Check let.me.play on your browser 
 echo "$YOUR_HOST_IP let.me.play" >> /etc/hosts
