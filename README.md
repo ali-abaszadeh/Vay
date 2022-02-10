@@ -48,7 +48,7 @@ HTTPS
 
 ■ if possible: list of kernel modules
 
-This test task has been executed and done successfully on the ubuntu 20.04.
+This test task has been executed and done successfully on the Mint 20.
 
 ## Installation
 
@@ -72,7 +72,7 @@ git clone https://github.com/ali-abaszadeh/Vay.git
 ```
 
 ## Certificates Structure
-As you see in below our certificates structure has been shown. I have used self signed method to create certificate. You don't need to create a certificate again. You can use these certificates for your test. If you want to create other certificates don't worry. you can create them. command are as follow:
+As you see in below our certificates structure has been shown. I have used self signed method to create certificate. You don't need to create a certificate again and you won't need to run "Optional" steps. So You can use these certificates for your test and go to "How can I run the project". If you want to create other certificates don't worry. you can create them but remember to you shoud change "let.me.play" with your new domain name. The commands are as follow:
 
 ```bash
  ./certificates
