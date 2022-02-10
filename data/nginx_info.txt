@@ -1,0 +1,6 @@
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  Nginx and compile information after built:
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+nginx version: nginx/1.18.0 built by gcc 9.3.0 (Ubuntu 9.3.0-17ubuntu1~20.04) built with OpenSSL 1.1.1f 31 Mar 2020 TLS SNI support enabled configure arguments: --user=nginx --with-debug --group=nginx --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf --pid-path=/run/nginx.pid --lock-path=/run/lock/subsys/nginx --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --with-http_ssl_module --with-http_v2_module --with-file-aio --with-threads --with-select_module --without-poll_module
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

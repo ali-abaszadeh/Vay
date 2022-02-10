@@ -1,3 +1,6 @@
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
+# My Dockerfile:                                             
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
 # Download base image ubuntu 20.04
 FROM ubuntu:20.04
 
@@ -112,3 +115,4 @@ CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
 # Run script for handeling dynamic variables
 USER root
 ENTRYPOINT ["/set-variables.sh"]
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#

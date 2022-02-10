@@ -1,10 +1,10 @@
 server {
+    listen 10080;
     listen 10443 ssl;
     server_name  let.me.play;
     ssl_certificate /etc/nginx/certs/let.me.play.crt;
     ssl_certificate_key /etc/nginx/certs/let.me.play.key;
 
-#    root   /var/www/html/repo;
     root html;
 
     location / {

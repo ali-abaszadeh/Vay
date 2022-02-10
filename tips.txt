@@ -171,7 +171,7 @@ load average over the last 15 minutes is 2.21
 
 ###############################################################
 
-# How can I run the project
+# How can I run the project?
 
 git clone ali-abaszadeh
 
@@ -184,19 +184,11 @@ chmod +x pre-build.sh
 chmod +x build.sh
 ./build.sh
 
-# OR Build the nginx image and run it using below commands manually
-docker-compose build
-
-docker-compose up -d
-
-# Run set-variables.sh script on the container
-sleep 6
-docker-compose exec -d -u 0 $nginx_service_name /set-variables.sh
-
 #################################################################
 
 # Check let.me.play on your browser 
-echo "$YOUR_HOST_IP let.me.play" >> /etc/hosts
+
+echo "$YOUR_IP let.me.play" >> /etc/hosts
 curl https://let.me.play:10443
 curl http://let.me.play:10080
 
@@ -204,6 +196,8 @@ curl http://let.me.play:10080
 curl --head  https://let.me.play:10443
 
 # Restart Nginx
+# You will be able restart nginx using two below commands \
+# if you need to restart the nginx container
 chmod +x nginx.sh
 nginx-reset.sh 
 
