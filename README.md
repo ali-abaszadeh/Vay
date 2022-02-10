@@ -62,7 +62,7 @@ yum repolist && yum install docker-ce docker-ce-cli containerd.io git -y
 ```bash
 # Ubuntu distributions
 sudo apt update && apt-get install docker-ce docker-ce-cli containerd.io git -y
-'''
+```
 
 # Getting Started
 At first you should clone code to your desktop.
@@ -74,43 +74,43 @@ git clone https://github.com/ali-abaszadeh/Vay.git
 ## Certificates Structure
 As you see in below our certificates structure has been shown. I have used self signed method to create certificate. You don't need to create a certificate again. You can use these certificates for your test. If you want to create other certificates don't worry. you can create them. command are as follow:
 
+```bash
  ./certificates
  --- ca/
      --- {ENV}ROOTCA.key
      --- {ENV}ROOTCA.pem
  --- certificates
      --- {DOMAINs}.crt
+```
 
 ### ROOT CA (Optional)
-'''bash
+```bash
 ENV=test
 openssl genrsa -des3 -out ${ENV}ROOTCA.key 2048
 openssl req -x509 -new -nodes -subj "/C=GR/CN=Vay ${ENV} Root CA/O=Vay/OU=DevOps" -key ${ENV}ROOTCA.key -sha256 -days 1825 -out ${ENV}ROOTCA.pem
 openssl x509 -in ${ENV}ROOTCA.pem -inform PEM -out ${ENV}ROOTCA.crt
-'''
-'''bash
+
 root-key-pass: ublBcr9LM95j0GBhAQU5vQ2IIr3OPseX
-'''
+```
 
 ### Install ROOT CA (Ubuntu) (Optional)
 
 You can install CA on the your machine if you will need. The commands are as flows:
 
-'''bash
+```bash
 sudo mkdir /usr/share/ca-certificates/extra
 sudo cp ${ENV}/ca/${ENV}ROOTCA.crt /usr/share/ca-certificates/extra/
 sudo echo "extra/${ENV}ROOTCA.crt" >> /etc/ca-certificates.conf
 sudo update-ca-certificates
-'''
 
-In the container cases after this step you have to restart docker service
-'''bash
+# In the container cases after this step you have to restart docker service
+
 systemctl restart docker
-'''
+```
 
 ### DOMAIN CERT (Optional)
 
-'''bash
+```bash
 DOMAIN=let.me.play
 openssl genrsa -out ${DOMAIN}.key 2048
 openssl req -subj "/C=GR/CN=${DOMAIN}/O=Vay/OU=DevOps" -new -key ${DOMAIN}.key -out ${DOMAIN}.csr
@@ -126,60 +126,60 @@ EOF
 
 openssl x509 -req -in ${DOMAIN}.csr -CA ca/${ENV}ROOTCA.pem -CAkey ca/${ENV}ROOTCA.key -CAcreateserial \
 -out ${DOMAIN}.crt -days 825 -sha256 -extfile ${DOMAIN}.ext
-'''
+```
  
 ### DOMAIN Cert chain (Optional)
-'''bash
+```bash
 cat ${DOMAIN}.key ${DOMAIN}.crt ca/${ENV}ROOTCA.crt > ${DOMAIN}.pem
-'''
+```
  
 ### Check SSL Match keys (Optional)
 
 You can check whether a certificate matches a private key, or a CSR matches a certificate on your own computer by using the OpenSSL commands are as follow:
 
-'''bash
+```bash
 openssl pkey -in privateKey.key -pubout -outform pem | sha256sum
 openssl x509 -in certificate.crt -pubkey -noout -outform pem | sha256sum
 openssl req -in CSR.csr -pubkey -noout -outform pem | sha256sum
-'''
+```
  
 ## How can I run the project?
 
-'''bash
-git clone ali-abaszadeh
-'''
+```bash
+git clone https://github.com/ali-abaszadeh/Vay.git
+```
  
 ### Run pre build script
-'''bash
+```bash
 chmod +x pre-build.sh
 ./pre-build.sh
-'''
+```
 
  ### Build the nginx image and run it using build.sh automatically
-'''bash
+```bash
 chmod +x build.sh
 ./build.sh
-'''
+```
  
 ### Check let.me.play on your browser 
-'''bash
+```bash
 echo "$YOUR_IP let.me.play" >> /etc/hosts
 curl https://let.me.play:10443
 curl http://let.me.play:10080
-'''
+```
  
-### Check LOAD_AVARAGE and SYSTEM_ENTROPY
-'''bash
+### Check LOAD_AVERAGE and SYSTEM_ENTROPY
+```bash
 curl --head  https://let.me.play:10443
-'''
+```
  
 ### Restart Nginx
 
 You will be able restart nginx using two below commands if you need to restart the nginx container
-'''bash
+```bash
 chmod +x nginx.sh
 nginx-reset.sh
-'''
+```
 
 
 ## License
