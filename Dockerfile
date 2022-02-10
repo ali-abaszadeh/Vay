@@ -32,7 +32,7 @@ RUN apt install -y \
         kmod \
         pciutils \
         usbutils \
-        net-tools vim telnet curl \
+        net-tools \
         git && \
     rm -rf /var/lib/apt/lists/* && \
     apt clean
